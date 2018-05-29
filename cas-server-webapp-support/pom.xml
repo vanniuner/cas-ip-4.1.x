@@ -180,9 +180,22 @@
       <groupId>org.apache.logging.log4j</groupId>
       <artifactId>log4j-web</artifactId>
     </dependency>
+
+    <dependency>
+      <groupId>redis.clients</groupId>
+      <artifactId>jedis</artifactId>
+      <version>2.1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.data</groupId>
+      <artifactId>spring-data-redis</artifactId>
+      <version>1.1.1.RELEASE</version>
+    </dependency>
   </dependencies>
 
   <properties>
+    <spring.data.redis.version>1.1.1.RELEASE</spring.data.redis.version>
     <cs.dir>${project.parent.basedir}</cs.dir>
   </properties>
 </project>

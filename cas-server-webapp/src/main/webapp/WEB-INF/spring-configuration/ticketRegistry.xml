@@ -39,6 +39,8 @@
     <!-- Ticket Registry -->
     <bean id="ticketRegistry" class="org.jasig.cas.ticket.registry.DefaultTicketRegistry"/>
 
+    <bean id="redisTicketRegistry" class="org.jasig.cas.util.RedisTicketRegistry"/>
+
     <!--Quartz -->
     <!-- TICKET REGISTRY CLEANER -->
     <bean id="ticketRegistryCleaner" class="org.jasig.cas.ticket.registry.support.DefaultTicketRegistryCleaner"
