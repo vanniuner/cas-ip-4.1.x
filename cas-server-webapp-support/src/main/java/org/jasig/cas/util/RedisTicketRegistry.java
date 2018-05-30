@@ -65,7 +65,6 @@ public class RedisTicketRegistry extends AbstractDistributedTicketRegistry {
                 deleteFromTgtList(ticketId);
             }
             redisTemplate.delete(ticketId);
-//            redisTemplate.opsForValue().set(ticketId, null);
             logger.info("delete ticket:{}", ticketId);
         }catch (Exception e){
             logger.error("deleteTicket",e);
