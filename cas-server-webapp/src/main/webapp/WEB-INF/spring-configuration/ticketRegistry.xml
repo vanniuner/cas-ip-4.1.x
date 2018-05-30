@@ -37,15 +37,19 @@
     </description>
 
     <!-- Ticket Registry -->
-    <bean id="ticketRegistry" class="org.jasig.cas.ticket.registry.DefaultTicketRegistry"/>
-
-    <bean id="redisTicketRegistry" class="org.jasig.cas.util.RedisTicketRegistry"/>
+    <!--<bean id="ticketRegistry" class="org.jasig.cas.ticket.registry.DefaultTicketRegistry"/>-->
+    <!-- 失效时间8小时 根据 -->
+    <bean id="redisTicketRegistry" class="org.jasig.cas.util.RedisTicketRegistry">
+        <property name="redisTemplate" ref="redisTemplate" />
+        <property name="tgt_time" value="${tgt.maxTimeToLiveInSeconds}" />
+    </bean>
 
     <!--Quartz -->
     <!-- TICKET REGISTRY CLEANER -->
     <bean id="ticketRegistryCleaner" class="org.jasig.cas.ticket.registry.support.DefaultTicketRegistryCleaner"
           c:centralAuthenticationService-ref="centralAuthenticationService"
-          c:ticketRegistry-ref="ticketRegistry"/>
+          c:ticketRegistry-ref="redisTicketRegistry">
+    </bean>
 
     <bean id="jobDetailTicketRegistryCleaner"
           class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"

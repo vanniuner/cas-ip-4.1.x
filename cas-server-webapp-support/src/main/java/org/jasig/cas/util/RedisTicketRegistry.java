@@ -25,12 +25,7 @@ public class RedisTicketRegistry extends AbstractDistributedTicketRegistry {
 
 
     /**
-     * ST最大空闲时间
-     */
-    private int st_time;
-
-    /**
-     * TGT最大空闲时间
+     * TGT最大存货时间
      */
     private int tgt_time;
 
@@ -44,18 +39,14 @@ public class RedisTicketRegistry extends AbstractDistributedTicketRegistry {
     @Override
     public void addTicket(Ticket ticket) {
         try {
-            int seconds;
             final String key = ticket.getId();
             redisTemplate.opsForValue().set(key, ticket);
             logger.info("add ticket:{}", key);
             if (ticket instanceof TicketGrantingTicket) {
-                seconds = tgt_time;
                 addToTgtList(ticket.getId());
                 addUserTicket(ticket);
-            } else {
-                seconds = st_time;
             }
-            redisTemplate.expire(key, seconds, timeUnit);
+            redisTemplate.expire(key, tgt_time, timeUnit);
         }catch (Exception e){
             logger.error("addTicket",e);
         }
@@ -207,4 +198,11 @@ public class RedisTicketRegistry extends AbstractDistributedTicketRegistry {
     }
 
 
+    public int getTgt_time() {
+        return tgt_time;
+    }
+
+    public void setTgt_time(int tgt_time) {
+        this.tgt_time = tgt_time;
+    }
 }

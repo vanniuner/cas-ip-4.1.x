@@ -28,6 +28,7 @@ import org.jasig.cas.ticket.registry.RegistryCleaner;
 import org.jasig.cas.ticket.registry.TicketRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.redis.core.RedisTemplate;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -64,6 +65,18 @@ import java.util.Collections;
  * @since 3.0.0
  */
 public final class DefaultTicketRegistryCleaner implements RegistryCleaner {
+
+
+    private static RedisTemplate<String, Ticket> redisTemplate;
+
+    public static void setRedisTemplate(RedisTemplate<String, Ticket> redisTemplate) {
+        DefaultTicketRegistryCleaner.redisTemplate = redisTemplate;
+    }
+
+    /**
+     * 失效票据定时任务触发周期
+     */
+    public static final int PERIOD_ALIVE_TIME = 1900;
 
     /** The Commons Logging instance. */
     private final Logger logger = LoggerFactory.getLogger(getClass());
